@@ -26,7 +26,7 @@ class BookFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'isbn' => fake()->numberBetween(100, 500),
+            'isbn' => '978' . fake()->numberBetween(1000000000, 9999999999),
             'value' => fake()->randomFloat(2, 10, 100)
         ];
     }
