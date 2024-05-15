@@ -9,6 +9,8 @@ Route::prefix('v1')
         Route::middleware('auth:sanctum')->group(function () {
             // Logout route
             Route::post('/logout', [AuthController::class, 'logout']);
+
+            require __DIR__ . '/auth/book.php';
         });
 
         // Routes accessible only when guest (not authenticated)
