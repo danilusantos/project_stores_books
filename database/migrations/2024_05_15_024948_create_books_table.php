@@ -13,8 +13,8 @@ return new class () extends Migration {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->integer('isbn')->nullable();
-            $table->decimal('value', 10, 8)->nullable();
+            $table->decimal('isbn', 13, 0)->nullable();
+            $table->decimal('value', 10, 2)->nullable();
             $table->timestamps();
         });
     }
