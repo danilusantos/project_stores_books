@@ -44,6 +44,11 @@ class Book extends Model
         return BookFactory::new();
     }
 
+    /**
+     * Define a many-to-many relationship with the Store model.
+     *
+     * @return BelongsToMany
+     */
     public function stores(): BelongsToMany
     {
         return $this->belongsToMany(Store::class);
