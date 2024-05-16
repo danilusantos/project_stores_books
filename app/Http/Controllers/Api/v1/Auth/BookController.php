@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    // Total number of books per page for pagination
     private int $totalPage = 10;
 
     public function __construct(
@@ -21,6 +22,12 @@ class BookController extends Controller
         //
     }
 
+    /**
+     * Get paginated list of books.
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+     */
     public function index(Request $request): JsonResponse
     {
         $books = $this->service->paginate(
@@ -32,6 +39,12 @@ class BookController extends Controller
         return response()->json($books, 200);
     }
 
+    /**
+     * Store a new book.
+     *
+     * @param  CreateBookRequest  $request
+     * @return JsonResponse
+     */
     public function store(CreateBookRequest $request): JsonResponse
     {
         $book = $this->service->new(
@@ -42,9 +55,16 @@ class BookController extends Controller
             return response()->json(['message' => 'Book not created'], 501);
         }
 
-        return response()->json(['message' => 'Book stored successful'], 201);
+        return response()->json(['message' => 'Book stored successfully'], 201);
     }
 
+    /**
+     * Update an existing book.
+     *
+     * @param  UpdateBookRequest  $request
+     * @param  string|int  $id
+     * @return JsonResponse
+     */
     public function update(UpdateBookRequest $request, $id): JsonResponse
     {
         if(! $book = $this->service->findOne($id)) {
@@ -57,26 +77,38 @@ class BookController extends Controller
             return response()->json(['message' => 'Book not updated'], 501);
         }
 
-        return response()->json(['message' => 'Book updated successful'], 200);
+        return response()->json(['message' => 'Book updated successfully'], 200);
     }
 
+    /**
+     * Display the specified book.
+     *
+     * @param  string|int  $id
+     * @return JsonResponse
+     */
     public function show(string|int $id): JsonResponse
     {
         if(! $book = $this->service->findOne($id)) {
-            return response()->json(['message' => 'Book not founded'], 404);
+            return response()->json(['message' => 'Book not found'], 404);
         }
 
         return response()->json($book, 200);
     }
 
+    /**
+     * Remove the specified book from storage.
+     *
+     * @param  string|int  $id
+     * @return JsonResponse
+     */
     public function destroy(string|int $id): JsonResponse
     {
         if (! $this->service->findOne($id)) {
-            return response()->json(['message' => 'Book not founded'], 404);
+            return response()->json(['message' => 'Book not found'], 404);
         }
 
         $this->service->delete($id);
 
-        return response()->json(['message' => 'Book deleted successful'], 200);
+        return response()->json(['message' => 'Book deleted successfully'], 200);
     }
 }
