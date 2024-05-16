@@ -17,25 +17,19 @@ class AuthController extends Controller
      */
     public function login(AuthRequest $request)
     {
-        // Retrieve user credentials from the request
         $credentials = request(['email', 'password']);
 
-        // Attempt to authenticate the user
         if (!Auth::attempt($credentials)) {
-            // Authentication failed, return unauthorized response
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        // If authentication succeeds, retrieve the authenticated user
         $user = $request->user();
 
         // Revoking all another tokens
         $user->tokens()->delete();
-
         // Create a new access token for the authenticated user
         $token = $user->createToken($request->userAgent())->plainTextToken;
 
-        // Return the access token in JSON response
         return response()->json(['token' => $token]);
     }
 
@@ -47,10 +41,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        // Delete the current access token associated with the authenticated user
         $request->user()->currentAccessToken()->delete();
-
-        // Return a JSON response indicating successful logout
         return response()->json(['message' => 'Logged out']);
     }
 }
