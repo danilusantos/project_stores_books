@@ -29,6 +29,9 @@ class AuthController extends Controller
         // If authentication succeeds, retrieve the authenticated user
         $user = $request->user();
 
+        // Revoking all another tokens
+        $user->tokens()->delete();
+
         // Create a new access token for the authenticated user
         $token = $user->createToken($request->userAgent())->plainTextToken;
 
