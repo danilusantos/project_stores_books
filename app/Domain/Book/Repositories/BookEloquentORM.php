@@ -52,6 +52,7 @@ class BookEloquentORM implements BookRepositoryInterface
                     $query->orWhere('id', $filter);
                 }
             })
+            ->with(['stores'])
             ->paginate($totalPerPage, ["*"], 'page', $page)
             ->toArray();
     }

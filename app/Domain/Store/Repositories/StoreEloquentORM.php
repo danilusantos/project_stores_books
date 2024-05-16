@@ -30,6 +30,9 @@ class StoreEloquentORM implements StoreRepositoryInterface
                     $query->orWhere('address', 'like', "%{$filter}%");
                 }
             })
+            ->with(['books' => function ($query) {
+                $query->select('name', 'value');
+            }])
             ->paginate($totalPerPage, ["*"], 'page', $page)
             ->toArray();
     }
