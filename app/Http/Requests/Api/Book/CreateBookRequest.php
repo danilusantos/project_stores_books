@@ -39,7 +39,7 @@ class CreateBookRequest extends FormRequest
         return [
             'name' => 'required|max:100',
             'isbn' => 'nullable|numeric',
-            'value' => 'nullable|numeric|between:0.00,9999999999.99'
+            'value' => 'nullable|numeric|between:0.00,99999999.99'
         ];
     }
 }

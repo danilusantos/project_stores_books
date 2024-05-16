@@ -21,14 +21,14 @@ class UpdateBookRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        // Substituir vírgulas por pontos em 'value' se estiver presente
+        // Replace , with . in 'value' if present
         if ($this->has('value')) {
             $this->merge([
                 'value' => str_replace(',', '.', $this->input('value'))
             ]);
         }
 
-        // Adicionar o id ao request
+        // Add id to request
         if (! $this->has('id')) {
             $this->merge([
                 'id' => $this->book
@@ -47,7 +47,7 @@ class UpdateBookRequest extends FormRequest
             'id' => "required|integer|unique:books,id,{$this->id},id",
             'name' => 'required|max:100',
             'isbn' => 'nullable|numeric',
-            'value' => 'nullable|decimal:0.00,9999999999.99,'
+            'value' => 'nullable|decimal:0.00,99999999.99,'
         ];
     }
 }
