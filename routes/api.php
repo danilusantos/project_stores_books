@@ -10,7 +10,9 @@ Route::prefix('v1')
             // Logout route
             Route::post('/logout', [AuthController::class, 'logout']);
 
+            // Areas route
             require __DIR__ . '/auth/book.php';
+            require __DIR__ . '/auth/store.php';
         });
 
         // Routes accessible only when guest (not authenticated)
