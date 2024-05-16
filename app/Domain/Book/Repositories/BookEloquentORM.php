@@ -52,7 +52,9 @@ class BookEloquentORM implements BookRepositoryInterface
                     $query->orWhere('id', $filter);
                 }
             })
-            ->with(['stores'])
+            ->with(['stores' => function ($query) {
+                $query->select('name', 'address', 'active');
+            }])
             ->paginate($totalPerPage, ["*"], 'page', $page)
             ->toArray();
     }
@@ -65,7 +67,7 @@ class BookEloquentORM implements BookRepositoryInterface
      */
     public function findOne(string $id): stdClass|null
     {
-        if (! $book = $this->model->find($id)) {
+        if (! $book = $this->model->with(['stores'])->find($id)) {
             return null;
         }
 
